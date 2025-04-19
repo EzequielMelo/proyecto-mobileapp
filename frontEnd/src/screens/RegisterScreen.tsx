@@ -13,7 +13,7 @@ export default function RegisterScreen({ navigation }: Props) {
 
   const handleRegister = async () => {
     try {
-      await api.post('/users', { email, password }); //
+      await api.post('/auth/register', { email, password }); //
       Alert.alert('Registro exitoso', 'Verifica tu correo antes de iniciar sesión');
       navigation.navigate('Login');
     } catch (error: any) {
