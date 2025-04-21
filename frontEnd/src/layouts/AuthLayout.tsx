@@ -10,7 +10,9 @@ interface Props {
 export default function AuthLayout({ title, children }: Props) {
   return (
     <LinearGradient
-      colors={['#4c669f', '#3b5998', '#192f6a']} // Gradiente azul oscuro
+      colors={['#151F2E', '#10002B']}
+      start={{ x: 0.5, y: 0 }}
+      end={{ x: 0.5, y: 1 }}
       style={styles.container}
     >
       <StatusBar barStyle="light-content" />

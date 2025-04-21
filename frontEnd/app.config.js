@@ -3,17 +3,15 @@ export default ({ config }) => ({
   ...config,
   expo: {
     ...config.expo,
-    name: 'proyecto-mobileapp',
-    slug: 'proyecto-mobileapp',
+    name: 'Anime Project',
+    slug: 'Anime-Project',
     version: '1.0.0',
     orientation: 'portrait',
     icon: './assets/icon.png',
-    userInterfaceStyle: 'light',
+    userInterfaceStyle: 'dark',
     newArchEnabled: true,
     splash: {
-      image: './assets/splash-icon.png',
-      resizeMode: 'contain',
-      backgroundColor: '#ffffff',
+      backgroundColor: '#151F2E',
     },
     ios: {
       supportsTablet: true,
@@ -22,8 +20,8 @@ export default ({ config }) => ({
       package: 'com.yourcompany.yourappname',
       versionCode: 1,
       adaptiveIcon: {
-        foregroundImage: './assets/adaptive-icon.png',
-        backgroundColor: '#ffffff',
+        foregroundImage: './assets/icon.png',
+        backgroundColor: '#151F2E',
       },
     },
     web: {
