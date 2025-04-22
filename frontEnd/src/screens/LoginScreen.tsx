@@ -1,4 +1,12 @@
-import { Text, TextInput, Button, View, ActivityIndicator, TouchableOpacity } from 'react-native';
+import {
+  Text,
+  TextInput,
+  Button,
+  View,
+  ActivityIndicator,
+  TouchableOpacity,
+  StyleSheet,
+} from 'react-native';
 import AuthLayout from '../layouts/AuthLayout';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import type { RootStackParamList } from '../navigation/RootStackParamList';
@@ -25,6 +33,7 @@ export default function LoginScreen({ navigation }: Props) {
     register,
     handleSubmit,
     setValue,
+    watch,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(schema),
@@ -33,6 +42,16 @@ export default function LoginScreen({ navigation }: Props) {
   const [serverError, setServerError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const { login } = useContext(AuthContext);
+
+  const [showUsers, setShowUsers] = useState(false); // Ahora sí declarado correctamente
+
+  const sampleUsers = [
+    { email: 'cuentaejemplo123@ejemplo.com', password: '123456' },
+    { email: 'micuenta@gmail.com', password: '12345678' },
+    { email: 'cuenta@cuenta.com', password: '1234567' },
+  ];
+  const email = watch('email');
+  const password = watch('password');
 
   const handleLogin = async (data: { email: string; password: string }) => {
     try {
@@ -66,8 +85,8 @@ export default function LoginScreen({ navigation }: Props) {
             borderRadius: 8,
             color: 'white',
           }}
+          value={email} // <-- ahora toma el valor actual
           onChangeText={(text) => setValue('email', text)}
-          {...register('email')}
         />
         {errors.email && (
           <Text style={{ color: 'red', marginTop: -10 }}>{errors.email.message}</Text>
@@ -82,8 +101,8 @@ export default function LoginScreen({ navigation }: Props) {
             borderRadius: 8,
             color: 'white',
           }}
+          value={password} // <-- también acá
           onChangeText={(text) => setValue('password', text)}
-          {...register('password')}
         />
         {errors.password && (
           <Text style={{ color: 'red', marginTop: -10 }}>{errors.password.message}</Text>
@@ -110,12 +129,57 @@ export default function LoginScreen({ navigation }: Props) {
             <Text style={{ color: 'white', fontWeight: 'bold' }}>Ingresar</Text>
           )}
         </TouchableOpacity>
+
         <Button
           title="¿No tenés cuenta? Registrate"
           onPress={() => navigation.navigate('Registro')}
           color="#0D6EFD"
         />
       </View>
+
+      {/* Botón para desplegar usuarios */}
+      <View style={{ marginTop: 20 }}>
+        <Button
+          title="Elegir usuario de prueba"
+          onPress={() => setShowUsers(!showUsers)}
+          color="#0D6EFD"
+        />
+      </View>
+
+      {/* Lista de usuarios */}
+      {showUsers && (
+        <View style={styles.userList}>
+          {sampleUsers.map((user, index) => (
+            <TouchableOpacity
+              key={index}
+              style={styles.userButton}
+              onPress={() => {
+                setValue('email', user.email);
+                setValue('password', user.password);
+                setShowUsers(false); // Cierra la lista
+              }}
+            >
+              <Text style={styles.userText}>{user.email}</Text>
+            </TouchableOpacity>
+          ))}
+        </View>
+      )}
     </AuthLayout>
   );
 }
+
+const styles = StyleSheet.create({
+  userList: {
+    marginTop: 10,
+    backgroundColor: '#1c2a3a',
+    borderRadius: 8,
+    padding: 10,
+  },
+  userButton: {
+    paddingVertical: 8,
+  },
+  userText: {
+    color: 'white',
+    fontSize: 16,
+  },
+});
