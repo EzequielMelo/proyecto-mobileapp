@@ -17,7 +17,7 @@ export default ({ config }) => ({
       supportsTablet: true,
     },
     android: {
-      package: 'com.yourcompany.yourappname',
+      package: 'com.ezequiel.animeproject',
       versionCode: 1,
       adaptiveIcon: {
         foregroundImage: './assets/icon.png',
@@ -30,6 +30,9 @@ export default ({ config }) => ({
     extra: {
       supabaseUrl: process.env.EXPO_PUBLIC_SUPABASE_URL,
       supabaseAnonKey: process.env.EXPO_PUBLIC_SUPABASE_ANON_KEY,
+      eas: {
+        projectId: '2e9dccbf-1b1b-4c7e-80f4-2f4ab850908a',
+      },
     },
   },
 });
