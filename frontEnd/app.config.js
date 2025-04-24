@@ -5,7 +5,7 @@ export default ({ config }) => ({
     ...config.expo,
     name: 'Anime Project',
     slug: 'Anime-Project',
-    version: '1.0.0',
+    version: '1.0.1',
     orientation: 'portrait',
     icon: './assets/icon.png',
     userInterfaceStyle: 'dark',
@@ -28,8 +28,7 @@ export default ({ config }) => ({
       favicon: './assets/favicon.png',
     },
     extra: {
-      supabaseUrl: process.env.EXPO_PUBLIC_SUPABASE_URL,
-      supabaseAnonKey: process.env.EXPO_PUBLIC_SUPABASE_ANON_KEY,
+      backendUrl: process.env.EXPO_PUBLIC_API_URL,
       eas: {
         projectId: '2e9dccbf-1b1b-4c7e-80f4-2f4ab850908a',
       },
