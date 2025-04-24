@@ -1,11 +1,21 @@
 import dotenv from 'dotenv';
 dotenv.config();
+
 import express from 'express';
+import cors from 'cors';
 import authRoutes from './routes/authRoutes';
 import userRoutes from './routes/userRoutes';
 
 const app = express();
 const PORT = parseInt(process.env.PORT || '3000', 10);
+
+// configuracion de cors
+app.use(
+  cors({
+    origin: '*', // En produccion especificar el url de mi app
+    credentials: true,
+  }),
+);
 
 app.use(express.json());
 app.use('/api/auth', authRoutes);
