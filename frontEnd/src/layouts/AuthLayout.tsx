@@ -1,6 +1,6 @@
-import { View, Text, StyleSheet, StatusBar } from 'react-native';
-import { LinearGradient } from 'expo-linear-gradient';
-import React from 'react';
+import { View, Text, StyleSheet, StatusBar } from "react-native";
+import { LinearGradient } from "expo-linear-gradient";
+import React from "react";
 
 interface Props {
   title?: string;
@@ -10,7 +10,7 @@ interface Props {
 export default function AuthLayout({ title, children }: Props) {
   return (
     <LinearGradient
-      colors={['#151F2E', '#10002B']}
+      colors={["#151F2E", "#10002B"]}
       start={{ x: 0.5, y: 0 }}
       end={{ x: 0.5, y: 1 }}
       style={styles.container}
@@ -30,14 +30,14 @@ const styles = StyleSheet.create({
   },
   inner: {
     flex: 1,
-    justifyContent: 'center',
+    justifyContent: "center",
     padding: 24,
   },
   title: {
     fontSize: 28,
-    color: 'white',
-    fontWeight: 'bold',
+    color: "white",
+    fontWeight: "bold",
     marginBottom: 32,
-    textAlign: 'center',
+    textAlign: "center",
   },
 });

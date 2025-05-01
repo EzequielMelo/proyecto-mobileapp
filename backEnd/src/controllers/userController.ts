@@ -1,22 +1,22 @@
-import { supabase } from '../supabaseClient';
-import { RequestHandler } from 'express';
-import { translateSupabaseError } from '../utils/supabaseErrorTranslator';
+import { supabase } from "../supabaseClient";
+import { RequestHandler } from "express";
+import { translateSupabaseError } from "../utils/supabaseErrorTranslator";
 
 interface CreateUserBody {
   email: string;
   password: string;
 }
 
-export const createUser: RequestHandler<unknown, unknown, CreateUserBody> = async (
-  req,
-  res,
-  next,
-) => {
+export const createUser: RequestHandler<
+  unknown,
+  unknown,
+  CreateUserBody
+> = async (req, res, next) => {
   try {
     const { email, password } = req.body;
 
     if (!email || !password) {
-      res.status(400).json({ error: 'Email y contraseña son requeridos.' });
+      res.status(400).json({ error: "Email y contraseña son requeridos." });
       return next();
     }
 
@@ -29,7 +29,7 @@ export const createUser: RequestHandler<unknown, unknown, CreateUserBody> = asyn
     }
 
     res.status(201).json({
-      message: 'Usuario creado exitosamente.',
+      message: "Usuario creado exitosamente.",
       user: data.user,
     });
     return next();
@@ -41,7 +41,10 @@ export const createUser: RequestHandler<unknown, unknown, CreateUserBody> = asyn
 export const loginUser: RequestHandler = async (req, res, next) => {
   try {
     const { email, password } = req.body;
-    const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
 
     if (error) {
       const translatedError = translateSupabaseError(error.message);
@@ -50,7 +53,7 @@ export const loginUser: RequestHandler = async (req, res, next) => {
     }
 
     res.status(200).json({
-      message: 'Login exitoso.',
+      message: "Login exitoso.",
       session: data.session,
       user: data.user,
     });

@@ -1,6 +1,6 @@
-import { AuthProvider } from './src/auth/AuthContext';
-import RootNavigator from './src/navigation/RootNavigator';
-AuthProvider;
+import React from "react";
+import { AuthProvider } from "./src/auth/AuthContext";
+import RootNavigator from "./src/navigation/RootNavigator";
 
 export default function App() {
   return (

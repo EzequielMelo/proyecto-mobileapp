@@ -1,15 +1,17 @@
-import { useEffect, useState, useContext } from 'react';
-import { View, Text, ActivityIndicator, Button } from 'react-native';
-import { AuthContext } from '../auth/AuthContext';
-import { fetchUserData } from '../services/user';
-import type { NativeStackScreenProps } from '@react-navigation/native-stack';
-import type { RootStackParamList } from '../navigation/RootStackParamList';
+import React, { useEffect, useState, useContext } from "react";
+import { View, Text, ActivityIndicator, Button } from "react-native";
+import { AuthContext } from "../auth/AuthContext";
+import { fetchUserData } from "../services/user";
+import type { NativeStackScreenProps } from "@react-navigation/native-stack";
+import type { RootStackParamList } from "../navigation/RootStackParamList";
+import { User } from "../types/User";
 
-type Props = NativeStackScreenProps<RootStackParamList, 'Home'>;
+type Props = NativeStackScreenProps<RootStackParamList, "Home">;
 
+// eslint-disable-next-line no-unused-vars
 export default function HomeScreen({ navigation }: Props) {
   const { token, logout } = useContext(AuthContext);
-  const [user, setUser] = useState<any>(null);
+  const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -19,7 +21,7 @@ export default function HomeScreen({ navigation }: Props) {
         const fetchedUser = await fetchUserData(token);
         setUser(fetchedUser);
       } catch (error) {
-        console.error('Error fetching user data', error);
+        console.error("Error fetching user data", error);
       } finally {
         setLoading(false);
       }

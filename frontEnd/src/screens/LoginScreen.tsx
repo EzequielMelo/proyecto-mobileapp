@@ -1,3 +1,4 @@
+import React from "react";
 import {
   Text,
   TextInput,
@@ -6,31 +7,33 @@ import {
   ActivityIndicator,
   TouchableOpacity,
   StyleSheet,
-} from 'react-native';
-import AuthLayout from '../layouts/AuthLayout';
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import type { RootStackParamList } from '../navigation/RootStackParamList';
-import { useContext, useState } from 'react';
-import { AxiosError } from 'axios';
-import * as yup from 'yup';
-import api from '../api/axios';
-import { useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
-import { AuthContext } from '../auth/AuthContext';
+} from "react-native";
+import AuthLayout from "../layouts/AuthLayout";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import type { RootStackParamList } from "../navigation/RootStackParamList";
+import { useContext, useState } from "react";
+import { AxiosError } from "axios";
+import * as yup from "yup";
+import api from "../api/axios";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { AuthContext } from "../auth/AuthContext";
 
-type Props = NativeStackScreenProps<RootStackParamList, 'Login'>;
+type Props = NativeStackScreenProps<RootStackParamList, "Login">;
 
 const schema = yup.object().shape({
-  email: yup.string().email('El email no es válido').required('El email es obligatorio'),
+  email: yup
+    .string()
+    .email("El email no es válido")
+    .required("El email es obligatorio"),
   password: yup
     .string()
-    .min(6, 'La contraseña debe tener al menos 6 caracteres')
-    .required('La contraseña es obligatoria'),
+    .min(6, "La contraseña debe tener al menos 6 caracteres")
+    .required("La contraseña es obligatoria"),
 });
 
 export default function LoginScreen({ navigation }: Props) {
   const {
-    register,
     handleSubmit,
     setValue,
     watch,
@@ -46,18 +49,22 @@ export default function LoginScreen({ navigation }: Props) {
   const [showUsers, setShowUsers] = useState(false); // Ahora sí declarado correctamente
 
   const sampleUsers = [
-    { email: 'cuentaejemplo123@ejemplo.com', password: '123456' },
-    { email: 'micuenta@gmail.com', password: '12345678' },
-    { email: 'cuenta@cuenta.com', password: '1234567' },
+    {
+      email: "cuentaejemplo123@ejemplo.com",
+      password: "123456",
+    },
+    { email: "micuenta@gmail.com", password: "12345678" },
+    { email: "cuenta@cuenta.com", password: "1234567" },
+    { email: "pruebaapp1@cuenta.com", password: "1234567" },
   ];
-  const email = watch('email');
-  const password = watch('password');
+  const email = watch("email");
+  const password = watch("password");
 
   const handleLogin = async (data: { email: string; password: string }) => {
     try {
       setServerError(null);
       setLoading(true);
-      const response = await api.post('/auth/login', data);
+      const response = await api.post("/auth/login", data);
 
       const token = response.data.session.access_token;
       const user = response.data.user;
@@ -65,7 +72,9 @@ export default function LoginScreen({ navigation }: Props) {
       await login(token, user);
     } catch (error) {
       const err = error as AxiosError<{ error: string }>;
-      setServerError(err.response?.data?.error || 'Ocurrió un error al iniciar sesión');
+      setServerError(
+        err.response?.data?.error || "Ocurrió un error al iniciar sesión",
+      );
     } finally {
       setLoading(false);
     }
@@ -76,49 +85,61 @@ export default function LoginScreen({ navigation }: Props) {
       <View style={{ gap: 16 }}>
         <TextInput
           placeholder="Email"
-          placeholderTextColor={'white'}
+          placeholderTextColor={"white"}
           autoCapitalize="none"
           keyboardType="email-address"
           style={{
-            backgroundColor: '#515966',
+            backgroundColor: "#515966",
             padding: 12,
             borderRadius: 8,
-            color: 'white',
+            color: "white",
           }}
           value={email} // <-- ahora toma el valor actual
-          onChangeText={(text) => setValue('email', text)}
+          onChangeText={(text) => setValue("email", text)}
         />
         {errors.email && (
-          <Text style={{ color: 'red', marginTop: -10 }}>{errors.email.message}</Text>
+          <Text style={{ color: "red", marginTop: -10 }}>
+            {errors.email.message}
+          </Text>
         )}
         <TextInput
           placeholder="Contraseña"
-          placeholderTextColor={'white'}
+          placeholderTextColor={"white"}
           secureTextEntry
           style={{
-            backgroundColor: '#515966',
+            backgroundColor: "#515966",
             padding: 12,
             borderRadius: 8,
-            color: 'white',
+            color: "white",
           }}
           value={password} // <-- también acá
-          onChangeText={(text) => setValue('password', text)}
+          onChangeText={(text) => setValue("password", text)}
         />
         {errors.password && (
-          <Text style={{ color: 'red', marginTop: -10 }}>{errors.password.message}</Text>
+          <Text style={{ color: "red", marginTop: -10 }}>
+            {errors.password.message}
+          </Text>
         )}
 
         {serverError && (
-          <Text style={{ color: 'red', textAlign: 'center', marginBottom: 8 }}>{serverError}</Text>
+          <Text
+            style={{
+              color: "red",
+              textAlign: "center",
+              marginBottom: 8,
+            }}
+          >
+            {serverError}
+          </Text>
         )}
 
         <TouchableOpacity
           onPress={handleSubmit(handleLogin)}
           style={{
-            backgroundColor: loading ? '#ccc' : '#DC3545',
+            backgroundColor: loading ? "#ccc" : "#DC3545",
             padding: 14,
             borderRadius: 8,
-            alignItems: 'center',
+            alignItems: "center",
             marginTop: 10,
           }}
           disabled={loading}
@@ -126,13 +147,13 @@ export default function LoginScreen({ navigation }: Props) {
           {loading ? (
             <ActivityIndicator color="#fff" />
           ) : (
-            <Text style={{ color: 'white', fontWeight: 'bold' }}>Ingresar</Text>
+            <Text style={{ color: "white", fontWeight: "bold" }}>Ingresar</Text>
           )}
         </TouchableOpacity>
 
         <Button
           title="¿No tenés cuenta? Registrate"
-          onPress={() => navigation.navigate('Registro')}
+          onPress={() => navigation.navigate("Registro")}
           color="#0D6EFD"
         />
       </View>
@@ -154,8 +175,8 @@ export default function LoginScreen({ navigation }: Props) {
               key={index}
               style={styles.userButton}
               onPress={() => {
-                setValue('email', user.email);
-                setValue('password', user.password);
+                setValue("email", user.email);
+                setValue("password", user.password);
                 setShowUsers(false); // Cierra la lista
               }}
             >
@@ -171,7 +192,7 @@ export default function LoginScreen({ navigation }: Props) {
 const styles = StyleSheet.create({
   userList: {
     marginTop: 10,
-    backgroundColor: '#1c2a3a',
+    backgroundColor: "#1c2a3a",
     borderRadius: 8,
     padding: 10,
   },
@@ -179,7 +200,7 @@ const styles = StyleSheet.create({
     paddingVertical: 8,
   },
   userText: {
-    color: 'white',
+    color: "white",
     fontSize: 16,
   },
 });

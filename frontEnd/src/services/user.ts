@@ -1,7 +1,7 @@
-import api from '../api/axios';
+import api from "../api/axios";
 
 export const fetchUserData = async (token: string) => {
-  const response = await api.get('/users/me', {
+  const response = await api.get("/users/me", {
     headers: {
       Authorization: `Bearer ${token}`,
     },

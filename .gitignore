@@ -1,41 +1,73 @@
-# Learn more https://docs.github.com/en/get-started/getting-started-with-git/ignoring-files
-
-# dependencies
+# --- Node.js / General ---
 node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+.pnpm-debug.log
 
-# Expo
+# --- TypeScript ---
+*.tsbuildinfo
+
+# --- Environment Variables ---
+.env
+.env.*.local
+.env.local
+
+# --- Logs ---
+*.log
+logs/
+*.log.*
+log/
+debug.log
+
+# --- macOS ---
+.DS_Store
+
+# --- Windows ---
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# --- Linux ---
+*~
+
+# --- VSCode ---
+.vscode/*
+!.vscode/settings.json
+!.vscode/extensions.json
+
+# --- Prettier / ESLint ---
+.prettiercache
+.eslintcache
+
+# --- Expo / React Native ---
 .expo/
+.expo-shared/
 dist/
+build/
 web-build/
-expo-env.d.ts
-frontEnd/android
-frontEnd/ios
-
-# Native
-*.orig.*
 *.jks
 *.p8
 *.p12
 *.key
 *.mobileprovision
+*.orig.*
 
-# Metro
-.metro-health-check*
+# Metro cache
+.metro-cache/
+.metro-health-check/
 
-# debug
-npm-debug.*
-yarn-debug.*
-yarn-error.*
+# Android / iOS (por si usás EAS Build o nativizás el proyecto)
+android/
+ios/
 
-# macOS
-.DS_Store
-*.pem
+# --- Optional: coverage from tests ---
+coverage/
 
-# local env files
-.env*.local
-.env
-.env.*
+# --- Optional: IDEs ---
+.idea/
+*.iml
 
-# typescript
-*.tsbuildinfo
-
+# --- Git merge files ---
+*.orig
